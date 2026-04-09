@@ -1,18 +1,37 @@
 'use client'
 
 import type { ReviewResult } from '@/lib/senate/types'
+import { APORTE_CONSOLIDADO_KEY } from '@/lib/senate/constants'
 import { AlertTriangle, Loader2, Scale } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 
-function aportesDesdeDatos(
-  alertas: ReviewResult['alertas_criticas'],
-  datos: Record<string, string>
-): Record<string, string> {
-  const o: Record<string, string> = {}
-  for (const a of alertas) {
-    o[a.id] = datos[`aporte_alerta_${a.id}`] ?? ''
-  }
-  return o
+/** Viñetas orientativas: qué debe aportar el humano según cada alerta. */
+function checklistContenido(
+  alertas: ReviewResult['alertas_criticas']
+): string[] {
+  return alertas.map((a) => {
+    const cl = a.clausula_afectada.trim()
+    const obs = a.observacion.trim()
+    const sug = a.sugerencia?.trim()
+    let line = ''
+    if (cl) line += `${cl}: `
+    line += obs || '(sin texto de observación)'
+    if (sug) line += ` — Sugerencia del revisor: ${sug}`
+    return line
+  })
+}
+
+/** Texto inicial del cuadro único: consolidado guardado o legado por alerta. */
+function textoInicialMejora(
+  datos: Record<string, string>,
+  alertas: ReviewResult['alertas_criticas']
+): string {
+  const c = datos.aporte_revision_consolidado?.trim()
+  if (c) return c
+  const legacy = alertas
+    .map((a) => datos[`aporte_alerta_${a.id}`]?.trim())
+    .filter(Boolean)
+  return legacy.join('\n\n---\n\n')
 }
 
 type Props = {
@@ -37,19 +56,23 @@ export function StepRevision({
   isRefining,
   error,
 }: Props) {
-  const [aportes, setAportes] = useState<Record<string, string>>({})
+  const [aporteConsolidado, setAporteConsolidado] = useState('')
 
   useEffect(() => {
-    setAportes(aportesDesdeDatos(revision.alertas_criticas, datosUsuario))
+    setAporteConsolidado(textoInicialMejora(datosUsuario, revision.alertas_criticas))
   }, [sessionUpdatedAt, revision, datosUsuario])
 
-  const hayAporte = useMemo(
-    () => Object.values(aportes).some((t) => t.trim().length > 0),
-    [aportes]
+  const puntosGuia = useMemo(
+    () => checklistContenido(revision.alertas_criticas),
+    [revision.alertas_criticas]
   )
 
+  const hayAporte = aporteConsolidado.trim().length > 0
+
   const handleRefine = () => {
-    void onRefine(aportes)
+    void onRefine({
+      [APORTE_CONSOLIDADO_KEY]: aporteConsolidado.trim(),
+    })
   }
 
   return (
@@ -87,50 +110,65 @@ export function StepRevision({
         <div>
           <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-red-900">
             <AlertTriangle className="h-4 w-4" aria-hidden />
-            Alertas críticas — aportes para nutrir el convenio
+            Alertas críticas y cuadro de mejora
           </h3>
-          <p className="mb-3 text-xs text-slate-600">
-            Redacte en cada campo la información institucional que deba incorporarse al borrador. Luego
-            pulse <strong>Integrar y volver a revisar</strong> para generar un nuevo texto y un nuevo
-            dictamen.
-          </p>
-          <ul className="space-y-4">
-            {revision.alertas_criticas.map((a) => (
-              <li
-                key={a.id}
-                className="rounded-md border border-red-200 bg-red-50/90 p-3 text-sm text-red-950"
-              >
-                <p className="font-medium">{a.clausula_afectada}</p>
-                <p className="mt-1">{a.observacion}</p>
-                <p className="mt-1 text-xs opacity-90">{a.fundamento}</p>
-                {a.sugerencia ? (
-                  <p className="mt-1 text-xs text-red-900/90">
-                    <span className="font-medium">Sugerencia del revisor:</span> {a.sugerencia}
-                  </p>
-                ) : null}
-                <label className="mt-3 block" htmlFor={`aporte-${a.id}`}>
-                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-700">
-                    Aporte humano para esta alerta
-                  </span>
-                  <textarea
-                    id={`aporte-${a.id}`}
-                    rows={4}
-                    className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-                    placeholder="Ej.: montos, fechas de ministración, cuenta CLABE, titularidad de PI, cláusulas de confidencialidad…"
-                    value={aportes[a.id] ?? ''}
-                    onChange={(e) =>
-                      setAportes((prev) => ({ ...prev, [a.id]: e.target.value }))
-                    }
-                    disabled={isRefining}
-                  />
-                </label>
-              </li>
-            ))}
-          </ul>
+
+          <div className="mb-4 rounded-md border border-slate-200 bg-slate-50/90 p-3 text-sm text-slate-800">
+            <p className="font-medium text-slate-900">Referencia por alerta</p>
+            <ul className="mt-2 space-y-3">
+              {revision.alertas_criticas.map((a) => (
+                <li key={a.id} className="border-l-2 border-red-200 pl-3">
+                  <p className="font-medium text-slate-900">{a.clausula_afectada}</p>
+                  <p className="mt-0.5 text-slate-700">{a.observacion}</p>
+                  {a.fundamento ? (
+                    <p className="mt-1 text-xs text-slate-600">{a.fundamento}</p>
+                  ) : null}
+                  {a.sugerencia ? (
+                    <p className="mt-1 text-xs text-slate-700">
+                      <span className="font-medium">Sugerencia:</span> {a.sugerencia}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-md border border-amber-100 bg-amber-50/80 p-3 text-sm text-amber-950">
+            <p className="font-semibold text-amber-950">Qué debe incluir el aporte humano</p>
+            <p className="mt-1 text-xs text-amber-900/90">
+              Use la lista siguiente como guía; redacte luego el texto completo en el cuadro de abajo.
+            </p>
+            <ul className="mt-2 list-inside list-disc space-y-1.5 pl-1 text-sm">
+              {puntosGuia.map((line, i) => (
+                <li key={i} className="marker:text-amber-800">
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <label className="mt-4 block" htmlFor="aporte-consolidado">
+            <span className="text-sm font-semibold text-slate-900">
+              Cuadro de mejora (único)
+            </span>
+            <p className="mt-1 text-xs text-slate-600">
+              Incorpore aquí montos, fechas, esquemas de pago, titularidad de PI, confidencialidad,
+              datos de cuenta, plazos y cualquier dato institucional que deba quedar en el convenio.
+            </p>
+            <textarea
+              id="aporte-consolidado"
+              rows={10}
+              className="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+              placeholder="Escriba el texto que nutrirá el borrador atendiendo los puntos anteriores…"
+              value={aporteConsolidado}
+              onChange={(e) => setAporteConsolidado(e.target.value)}
+              disabled={isRefining}
+            />
+          </label>
 
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-slate-600">
-              Debe completar al menos un campo con texto no vacío para ejecutar el refinamiento.
+              El cuadro de mejora no puede estar vacío para integrar y volver a revisar.
             </p>
             <button
               type="button"

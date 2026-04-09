@@ -21,6 +21,7 @@ import {
 import fs from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
+import { APORTE_CONSOLIDADO_KEY } from './constants'
 import {
   getOpenAI,
   MODEL_MINI,
@@ -231,19 +232,27 @@ export async function runRedactorRefinement(
     c.agent_prompts.redactor,
     'Modo refinamiento: partes del borrador ya existen. Debes integrar los APORTES HUMANOS por alerta sin inventar hechos nuevos. Conserva cláusulas válidas y coherencia. Salida en Markdown con encabezados de cláusulas en MAYÚSCULAS.',
   ].join('\n\n')
+  const consolidado = (aportesPorAlerta[APORTE_CONSOLIDADO_KEY] ?? '').trim()
   const tabla = resultadoRevision.alertas_criticas.map((a) => ({
     id_alerta: a.id,
     clausula_afectada: a.clausula_afectada,
     observacion_revisor: a.observacion,
     sugerencia_revisor: a.sugerencia ?? '',
-    texto_aporte_humano: (aportesPorAlerta[a.id] ?? '').trim(),
+    texto_aporte_humano: consolidado || (aportesPorAlerta[a.id] ?? '').trim(),
   }))
   const userPrompt = [
     `Tipo de instrumento: ${tipoInstrumento}`,
     'Datos estructurados:',
     JSON.stringify(datosUsuario),
-    'Alertas críticas y aportes del usuario (si un aporte está vacío, no asumas datos; mantén coherencia con el resto):',
-    JSON.stringify(tabla),
+    consolidado
+      ? 'Hay un APORTE HUMANO UNIFICADO que debe integrarse atendiendo el contexto de cada alerta listada.'
+      : 'Alertas críticas y aportes del usuario (si un aporte está vacío, no asumas datos; mantén coherencia con el resto):',
+    'Alertas críticas y texto a integrar:',
+    JSON.stringify(
+      consolidado
+        ? { aporte_unificado: consolidado, alertas: tabla.map(({ id_alerta, observacion_revisor }) => ({ id_alerta, observacion_revisor })) }
+        : tabla
+    ),
     'Borrador actual (intégralo y corrígelo según aportes):',
     textoBorradorActual.slice(0, 120000),
     'Devuelve el convenio completo refinado en Markdown.',
@@ -533,13 +542,17 @@ export async function runSenateRefineFromReview(params: {
       return {
         ok: false,
         error:
-          'Indique al menos un aporte en las alertas críticas (texto no vacío) antes de volver a revisar.',
+          'Complete el cuadro de mejora con texto no vacío antes de volver a revisar.',
       }
     }
 
     const merged = mergeDatosUsuario(params.datosUsuario, {})
     for (const id of Object.keys(aportesClean)) {
-      merged[`aporte_alerta_${id}`] = aportesClean[id]!
+      if (id === APORTE_CONSOLIDADO_KEY) {
+        merged.aporte_revision_consolidado = aportesClean[id]!
+      } else {
+        merged[`aporte_alerta_${id}`] = aportesClean[id]!
+      }
     }
     merged.refine_from_review_at = nowIso()
 
