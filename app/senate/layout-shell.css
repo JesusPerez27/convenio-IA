@@ -1,0 +1,19 @@
+/*
+ * CSS plano (sin @tailwind): si el bundle principal falla al procesarse, el navegador
+ * aún aplica tipografía y caja básica. Las clases Tailwind del wizard siguen siendo el diseño principal.
+ */
+.senate-root {
+  box-sizing: border-box;
+  font-family: ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  color: #0f172a;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.senate-root *,
+.senate-root *::before,
+.senate-root *::after {
+  box-sizing: inherit;
+}

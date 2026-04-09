@@ -1,0 +1,44 @@
+{
+  "jurisdiction_rules": [
+    {
+      "id": "TAB-001",
+      "name": "Mediación Tabasco",
+      "rule": "Toda controversia debe contemplar mediación previa ante el Centro de Acceso a la Justicia Alternativa (CAJA) del Poder Judicial del Estado de Tabasco cuando la plantilla aplicable así lo requiera.",
+      "severity": "critical"
+    },
+    {
+      "id": "TAB-002",
+      "name": "Competencia territorial",
+      "rule": "Para convenios con sede o ejecución principal en Tabasco, la jurisdicción y notificaciones deben ser coherentes con tribunales del Estado de Tabasco o Villahermosa según el instrumento.",
+      "severity": "warning"
+    },
+    {
+      "id": "TAB-003",
+      "name": "Domicilio y notificaciones (formatos UJAT)",
+      "rule": "Deben consignarse en DECLARACIONES los domicilios para efectos de la firma, citas, notificaciones y emplazamientos; la cláusula de COMUNICACIONES debe remitir a esos domicilios. Coherencia con Villahermosa/Tabasco cuando el patrón institucional aplica.",
+      "severity": "critical"
+    },
+    {
+      "id": "TAB-004",
+      "name": "Referencias institucionales UJAT",
+      "rule": "Las denominaciones de la Universidad Juárez Autónoma de Tabasco y sus representantes deben ser las proporcionadas por el usuario; no inventar cargos ni facultades.",
+      "severity": "critical"
+    },
+    {
+      "id": "TAB-005",
+      "name": "Específico con antecedente general",
+      "rule": "Los convenios específicos que dependan de un marco general deben identificar número, fecha o cláusula habilitante del convenio general.",
+      "severity": "critical"
+    }
+  ],
+  "internal_legal_review": {
+    "suggest_when": [
+      "alto_monto",
+      "transferencia_ip",
+      "datos_personales_sensibles",
+      "inmuebles",
+      "modificacion_sustancial"
+    ],
+    "note": "El Formalizador puede recomendar revisión del área jurídica interna sin sustituirla."
+  }
+}

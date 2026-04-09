@@ -1,0 +1,55 @@
+{
+  "titulo": "Código Civil Federal (fragmentos orientativos para el sistema)",
+  "nota": "Resumen no oficial para asistencia documental. No sustituye el Diario Oficial ni asesoría legal. Los agentes deben citar principios, no artículos inventados.",
+  "version_referencia": "corpus_local_etapa1",
+  "articulos_relevantes": [
+    {
+      "id": "CCF-CONS-01",
+      "tema": "Consentimiento",
+      "resumen": "El consentimiento debe prestarse libremente, sin vicios que lo invaliden según el ordenamiento (error, dolo, violencia, lesión, etc., según casos y preceptos aplicables)."
+    },
+    {
+      "id": "CCF-OBJ-01",
+      "tema": "Objeto del contrato",
+      "resumen": "El objeto debe ser lícito, posible y determinado o determinable; de lo contrario puede afectarse la validez."
+    },
+    {
+      "id": "CCF-REP-01",
+      "tema": "Representación",
+      "resumen": "Quien contrata en nombre de otro debe acreditar facultades; los actos que excedan el mandato o poder pueden generar ineficacia o responsabilidad según el caso."
+    },
+    {
+      "id": "CCF-FOR-01",
+      "tema": "Forma de los actos",
+      "resumen": "Cuando la ley exija forma especial (p. ej. escritura pública para ciertos actos), su omisión puede impedir la plena eficacia requerida para el caso."
+    },
+    {
+      "id": "CCF-NUL-01",
+      "tema": "Nulidades",
+      "resumen": "Las nulidades pueden ser absolutas o relativas según preceptos aplicables; el revisor debe señalar riesgos sin simular resolución judicial."
+    }
+  ],
+  "vicios_consentimiento": [
+    {
+      "tipo": "error",
+      "descripcion": "Falsa concepción de un hecho esencial que habría impedido el negocio o llevado a otro distinto."
+    },
+    {
+      "tipo": "dolo",
+      "descripcion": "Maquinación para inducir a error sobre hechos o circunstancias esenciales."
+    },
+    {
+      "tipo": "violencia",
+      "descripcion": "Violencia moral o física que determine el consentimiento de modo relevante."
+    },
+    {
+      "tipo": "mala_fe",
+      "descripcion": "Conducta contraria a la buena fe en negociación o cumplimiento que pueda relevarse en cláusulas abusivas o asimetrías graves."
+    },
+    {
+      "tipo": "lesion",
+      "descripcion": "Desequilibrio patrimonial relevante en ciertos supuestos previstos por la ley."
+    }
+  ],
+  "instruccion_agente_revisor": "Evaluar indicios textuales de vicios del consentimiento y asimetrías injustificadas; no concluir validez o nulidad definitiva; remitir a revisión humana."
+}

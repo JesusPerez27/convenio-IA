@@ -1,0 +1,102 @@
+{
+  "triggers": [
+    {
+      "id": "TRG-001",
+      "condition": "specific_without_general_reference",
+      "severity": "critical",
+      "message": "El convenio específico parece depender de un convenio general pero no lo identifica.",
+      "suggestion": "Solicitar fecha, número o cláusula habilitante del convenio general previo."
+    },
+    {
+      "id": "TRG-002",
+      "condition": "missing_representative_powers",
+      "severity": "critical",
+      "message": "No se documentan facultades suficientes del representante.",
+      "suggestion": "Incorporar acta, poder o acuerdo que fundamente la representación."
+    },
+    {
+      "id": "TRG-003",
+      "condition": "missing_address",
+      "severity": "critical",
+      "message": "Faltan domicilios en declaraciones para notificaciones y emplazamientos (formato UJAT).",
+      "suggestion": "Incorporar domicilio completo por parte y remisión en cláusula de comunicaciones a declaraciones."
+    },
+    {
+      "id": "TRG-004",
+      "condition": "ambiguous_object",
+      "severity": "critical",
+      "message": "El objeto es ambiguo o indeterminable.",
+      "suggestion": "Precisar objeto lícito, determinado o determinable conforme al tipo de convenio."
+    },
+    {
+      "id": "TRG-005",
+      "condition": "missing_term",
+      "severity": "critical",
+      "message": "No se establece vigencia o plazo.",
+      "suggestion": "Incluir vigencia, prórrogas y término."
+    },
+    {
+      "id": "TRG-006",
+      "condition": "amount_without_payment_scheme",
+      "severity": "critical",
+      "message": "Hay monto sin esquema de ministraciones o forma de pago.",
+      "suggestion": "Detallar ministraciones, fechas y cuenta receptora."
+    },
+    {
+      "id": "TRG-007",
+      "condition": "obligations_object_mismatch",
+      "severity": "warning",
+      "message": "Contradicción aparente entre obligaciones y objeto.",
+      "suggestion": "Alinear cláusulas de obligaciones con el objeto declarado."
+    },
+    {
+      "id": "TRG-008",
+      "condition": "missing_dispute_clause",
+      "severity": "critical",
+      "message": "Falta mecanismo de controversias acorde a plantillas Tabasco/UJAT.",
+      "suggestion": "Incorporar mediación y jurisdicción/competencia según corpus tabasco_validation_rules."
+    },
+    {
+      "id": "TRG-009",
+      "condition": "missing_mediation",
+      "severity": "warning",
+      "message": "Falta mediación previa cuando la plantilla aplicable la exige.",
+      "suggestion": "Incluir mediación ante CAJA Tabasco u organismo acordado."
+    },
+    {
+      "id": "TRG-010",
+      "condition": "ip_missing_when_project_outputs",
+      "severity": "warning",
+      "message": "Hay resultados explotables sin cláusula de propiedad intelectual.",
+      "suggestion": "Regular titularidad, licencias y publicaciones."
+    },
+    {
+      "id": "TRG-011",
+      "condition": "confidentiality_missing_when_sensitive_data",
+      "severity": "warning",
+      "message": "Se maneja información sensible sin confidencialidad.",
+      "suggestion": "Agregar confidencialidad y protección de datos personales si aplica."
+    },
+    {
+      "id": "TRG-012",
+      "condition": "cross_reference_inconsistent",
+      "severity": "warning",
+      "message": "Referencias cruzadas entre anexos o cláusulas inconsistentes.",
+      "suggestion": "Homologar numeración y referencias."
+    },
+    {
+      "id": "TRG-014",
+      "condition": "missing_caja_mediation_clause",
+      "severity": "warning",
+      "message": "No se advierte cláusula explícita de mediación ante el CAJA del Poder Judicial del Estado de Tabasco.",
+      "suggestion": "Incluir mediación CAJA y competencia conforme a corpus tabasco_validation_rules y formatos UJAT."
+    },
+    {
+      "id": "TRG-013",
+      "condition": "consent_vicio_sospecha",
+      "severity": "critical",
+      "message": "Indicios de vicio del consentimiento (error, dolo, mala fe) en declaraciones u obligaciones.",
+      "suggestion": "Revisar asimetría extrema, reserva mental, información esencial omitida o cláusulas abusivas."
+    }
+  ]
+}

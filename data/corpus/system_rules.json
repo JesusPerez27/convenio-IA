@@ -1,0 +1,30 @@
+{
+  "product_name": "Senado de Agentes para Convenios UJAT Tabasco",
+  "jurisdiction": "Tabasco, México",
+  "human_review_required": true,
+  "allow_export_if_critical_alerts": false,
+  "supported_instruments": [
+    "convenio_general_colaboracion",
+    "convenio_especifico_colaboracion",
+    "convenio_especifico_proyecto",
+    "convenio_modificatorio"
+  ],
+  "style_rules": {
+    "tone": "formal_institucional",
+    "avoid_invention": true,
+    "require_explicit_placeholders": true,
+    "must_preserve_ujat_structure": true
+  },
+  "consent_review": {
+    "must_check_vicios": ["error", "dolo", "mala_fe", "violencia", "lesion"],
+    "note": "El Revisor debe señalar indicios de vicio del consentimiento sin sustituir dictamen judicial."
+  },
+  "formato_ujat": {
+    "corpus_segmentos": "formato_ujat_segmentos.json",
+    "nota": "Incluir en declaraciones: facultades de representación; domicilios para citas, notificaciones y emplazamientos; objeto preciso. Cláusula de comunicaciones que remita a declaraciones. Mediación CAJA Tabasco."
+  },
+  "formalization": {
+    "distinguish_private_instrument_vs_public_deed": true,
+    "criteria_hint": "Cuantía, naturaleza del objeto, interés inmobiliario, actos que exijan forma especial o intervención notarial."
+  }
+}

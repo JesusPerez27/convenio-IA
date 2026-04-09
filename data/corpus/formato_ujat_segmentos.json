@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "descripcion": "Extractos y pautas derivadas de los formatos UJAT (Convenio General, Convenio Específico, Convenio específico por proyecto). No sustituyen el documento oficial vigente.",
+    "enfoque": "Facultades de representación, objeto determinable, domicilios para notificaciones, mediación CAJA Tabasco."
+  },
+  "objeto_licito_y_determinable": {
+    "criterios": [
+      "El objeto debe poder describirse sin ambigüedad material: qué se hace, con qué finalidad institucional y dentro de qué marco (general vs específico vs proyecto).",
+      "Evitar objeto meramente genérico sin anclaje a obligaciones o alcances concretos cuando el instrumento sea específico o de proyecto.",
+      "Para convenio específico: relacionar objeto con antecedente del convenio general y cláusula habilitante cuando corresponda."
+    ],
+    "placeholder_si_falta_detalle": "{{OBJETO_PRECISAR}}"
+  },
+  "facultades_representacion": {
+    "importancia": "Documentar la personalidad del firmante y el fundamento de sus facultades (nombramiento, poder, acta) es esencial para la validez y la oponibilidad del convenio.",
+    "pauta_ujat": "Incluir en declaraciones: personalidad de la UJAT; representación del Rector según art. 23 de la Ley Orgánica y fundamento del nombramiento; asistentes con nombramiento y facultades no revocadas; sin inventar números de escritura ni fechas no proporcionadas (usar placeholder explícito).",
+    "pauta_contraparte": "Incluir: naturaleza jurídica; identidad del representante; documento o acto con el que acredita personalidad y facultades; que las facultades no han sido revocadas o limitadas, si el usuario lo confirma.",
+    "bloque_declarativo_tipo": "Que [representante] acredita su carácter de [cargo], mediante [documento indicado por el usuario], y cuenta con las atribuciones para suscribir el presente Convenio, mismas que a la fecha no le han sido revocadas, ni limitadas en forma alguna."
+  },
+  "domicilios_y_notificaciones": {
+    "importancia": "Los domicilios en declaraciones sirven para citas, notificaciones y emplazamientos; deben mantenerse coherentes con la cláusula de comunicaciones.",
+    "frase_modelo_ujat": "Para los efectos a que haya lugar con motivo de la firma del presente Convenio, señala como domicilio el ubicado en [DOMICILIO COMPLETO]. Domicilio que será el mismo para todo tipo de citas, notificaciones o emplazamientos en caso de juicio.",
+    "datos_complementarios": "Correo institucional y teléfono de contacto para comunicaciones derivadas del convenio, si el usuario los proporciona.",
+    "remision_declaraciones": "En cláusula de COMUNICACIONES (cuando exista): las comunicaciones se dirigirán a los domicilios señalados en el apartado de DECLARACIONES.",
+    "campos_captura_sugeridos": [
+      "domicilio_a",
+      "domicilio_b",
+      "correo_a",
+      "correo_b",
+      "telefono_a",
+      "telefono_b"
+    ]
+  },
+  "mediacion_y_controversias_tabasco": {
+    "mediacion_caja": "Las Partes convienen someter controversias derivadas del convenio a mediación ante el Centro de Acceso a la Justicia Alternativa (CAJA) del Poder Judicial del Estado de Tabasco; si la mediación fuere infructuosa, las controversias serán resueltas por los tribunales competentes, como lógica general de los formatos revisados.",
+    "competencia": "Sometimiento a jurisdicción de tribunales del Estado de Tabasco y renuncia de fuero cuando el formato aplicable lo establezca, sin inventar cláusulas no alineadas con lo capturado.",
+    "requisito_procedibilidad": "En formatos institucionales puede exigirse agotar mediación o MASC como requisito de procedibilidad; el revisor debe verificar que exista mecanismo expreso."
+  },
+  "estructura_por_tipo": {
+    "convenio_general_colaboracion": "Proemio, antecedentes por parte, declaraciones (UJAT y contraparte) con domicilio y facultades, declaraciones conjuntas, cláusulas: objeto, alcances, compromisos, comisión técnica, vigencia, anticorrupción, mediación, interpretación/controversias.",
+    "convenio_especifico_colaboracion": "Antecedentes vinculando convenio general (fecha, cláusula habilitante), declaraciones con domicilios, cláusulas de obligaciones, comunicaciones remitiendo a declaraciones, comité técnico, IP, confidencialidad según aplique.",
+    "convenio_especifico_proyecto": "Antecedentes, declaraciones, objeto de proyecto, obligaciones, monto y ministraciones, entregables, comité, comunicaciones, domicilios en declaraciones."
+  }
+}

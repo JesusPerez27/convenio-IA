@@ -1,0 +1,180 @@
+{
+  "convenio_general_colaboracion": {
+    "objeto": {
+      "required": true,
+      "template": "PRIMERA.- OBJETO. Convienen las partes en que el objeto del presente instrumento es establecer las bases generales de colaboración {{objeto}}, en los términos y para los fines que se describen en las siguientes cláusulas."
+    },
+    "alcances_finalidades": {
+      "required": true,
+      "template": "SEGUNDA.- ALCANCES Y FINALIDADES. Las partes desarrollarán acciones de colaboración en materia de {{alcances}}, sin perjuicio de convenios específicos posteriores que las desarrollen en detalle."
+    },
+    "obligaciones_ujat": {
+      "required": true,
+      "template": "TERCERA.- OBLIGACIONES DE {{nombre_parte_a}}. {{obligaciones_a}}"
+    },
+    "obligaciones_contraparte": {
+      "required": true,
+      "template": "CUARTA.- OBLIGACIONES DE {{nombre_parte_b}}. {{obligaciones_b}}"
+    },
+    "obligaciones_conjuntas": {
+      "required": false,
+      "template": "QUINTA.- OBLIGACIONES CONJUNTAS. Las partes se obligan conjuntamente a {{obligaciones_conjuntas}}."
+    },
+    "comision_tecnica": {
+      "required": false,
+      "template": "SEXTA.- COMISIÓN O COMITÉ TÉCNICO. Las partes podrán integrar un comité técnico con la composición y funciones que acuerden por escrito: {{comite_tecnico}}."
+    },
+    "comunicaciones": {
+      "required": true,
+      "template": "SÉPTIMA.- COMUNICACIONES. Las comunicaciones referentes a cualquier aspecto de este Convenio deberán dirigirse a los domicilios señalados en el apartado de DECLARACIONES. Para notificaciones adicionales se indican los correos {{correo_a}} y {{correo_b}} y los teléfonos {{telefono_a}} y {{telefono_b}}, cuando se hubieren proporcionado."
+    },
+    "vigencia": {
+      "required": true,
+      "template": "OCTAVA.- VIGENCIA. El presente convenio entrará en vigor a partir de su firma y tendrá una vigencia de {{vigencia}}, salvo terminación anticipada conforme a las cláusulas aplicables."
+    },
+    "anticorrupcion": {
+      "required": true,
+      "template": "NOVENA.- INTEGRIDAD Y ANTICORRUPCIÓN. Las partes reconocen su compromiso con la legalidad, la transparencia y la integridad en el marco de la normatividad aplicable."
+    },
+    "mediacion": {
+      "required": true,
+      "template": "DÉCIMA.- MEDIACIÓN. Las partes convienen que toda controversia derivada del presente convenio, o relacionada con él, se someterá a mediación ante el Centro de Acceso a la Justicia Alternativa (CAJA) del Poder Judicial del Estado de Tabasco. Si la mediación resultare infructuosa, la controversia se resolverá conforme a la competencia que las partes establezcan en la cláusula de interpretación y solución de controversias, sin perjuicio de los requisitos de procedibilidad aplicables."
+    },
+    "controversias": {
+      "required": true,
+      "template": "DÉCIMA PRIMERA.- CONTROVERSIAS. Para lo no previsto en el presente instrumento y tras agotar la mediación cuando corresponda, las partes se someten a la competencia de los tribunales competentes en el Estado de Tabasco, renunciando a cualquier otro fuero que pudiera corresponderles por razón de sus domicilios presentes o futuros."
+    },
+    "modificaciones": {
+      "required": true,
+      "template": "DÉCIMA SEGUNDA.- MODIFICACIONES. Cualquier modificación al presente convenio deberá constar por escrito y firmarse por las partes."
+    },
+    "interpretacion": {
+      "required": false,
+      "template": "DÉCIMA TERCERA.- INTERPRETACIÓN. El presente convenio se interpretará de buena fe conforme a su letra y espíritu."
+    }
+  },
+  "convenio_especifico_colaboracion": {
+    "objeto": {
+      "required": true,
+      "template": "PRIMERA.- OBJETO. Las partes convienen que el objeto del presente convenio específico es {{objeto}}, en el marco del convenio general {{referencia_convenio_general}}."
+    },
+    "antecedente_general": {
+      "required": true,
+      "template": "ANTECEDENTES. Las partes celebraron el {{fecha_convenio_general}} el convenio general identificado como {{referencia_convenio_general}}, en la cláusula {{clausula_habilitante_convenio_general}} del cual se desprende la facultad para celebrar el presente instrumento."
+    },
+    "obligaciones_ujat": {
+      "required": true,
+      "template": "SEGUNDA.- OBLIGACIONES DE {{nombre_parte_a}}. {{obligaciones_a}}"
+    },
+    "obligaciones_contraparte": {
+      "required": true,
+      "template": "TERCERA.- OBLIGACIONES DE {{nombre_parte_b}}. {{obligaciones_b}}"
+    },
+    "entregables": {
+      "required": false,
+      "template": "CUARTA.- ENTREGABLES. Las partes acuerdan los siguientes entregables: {{entregables}}, conforme al calendario {{calendario}}."
+    },
+    "vigencia": {
+      "required": true,
+      "template": "QUINTA.- VIGENCIA. Vigencia: {{vigencia}}."
+    },
+    "terminacion_rescision": {
+      "required": true,
+      "template": "SEXTA.- TERMINACIÓN Y RESCISIÓN. Las partes podrán dar por terminado el presente convenio por las causas y plazos que se estipulen, sin perjuicio de lo dispuesto en materia de incumplimiento."
+    },
+    "ip": {
+      "required": false,
+      "template": "SÉPTIMA.- PROPIEDAD INTELECTUAL. {{clausula_ip_o_placeholder}}"
+    },
+    "confidencialidad": {
+      "required": false,
+      "template": "OCTAVA.- CONFIDENCIALIDAD. {{clausula_confidencialidad_o_placeholder}}"
+    },
+    "fiscal": {
+      "required": false,
+      "template": "NOVENA.- OBLIGACIONES FISCALES Y FACTURACIÓN. Cuando existan erogaciones, las partes atenderán las disposiciones fiscales aplicables; facturación: {{requiere_facturacion}}."
+    },
+    "comunicaciones_remision_declaraciones": {
+      "required": true,
+      "template": "COMUNICACIONES. Las comunicaciones referentes a cualquier aspecto de este Convenio deberán dirigirse a los domicilios señalados en el apartado de DECLARACIONES, con los medios de contacto indicados en dicho apartado cuando existan."
+    }
+  },
+  "convenio_especifico_proyecto": {
+    "objeto_proyecto": {
+      "required": true,
+      "template": "PRIMERA.- OBJETO. El presente convenio tiene por objeto la ejecución del proyecto {{nombre_proyecto}}: {{descripcion_proyecto}}."
+    },
+    "financieros": {
+      "required": true,
+      "template": "SEGUNDA.- MONTO Y MINISTRACIONES. Monto total: {{monto_total}} {{moneda}}. Ministraciones: {{ministraciones}}. Fechas de pago: {{fechas_pago}}. Cuenta receptora: {{cuenta_receptora}}."
+    },
+    "entregables_calendario": {
+      "required": true,
+      "template": "TERCERA.- ENTREGABLES Y CALENDARIO. Entregables: {{entregables}}. Calendario: {{calendario}}. Responsables: {{responsables_tecnicos}}."
+    },
+    "comite_tecnico": {
+      "required": false,
+      "template": "CUARTA.- COMITÉ TÉCNICO. {{comite_tecnico}}"
+    },
+    "ip": {
+      "required": true,
+      "template": "QUINTA.- PROPIEDAD INTELECTUAL Y RESULTADOS. {{hay_transferencia_ip}}"
+    },
+    "confidencialidad": {
+      "required": true,
+      "template": "SEXTA.- CONFIDENCIALIDAD Y DATOS PERSONALES. {{hay_confidencialidad}} {{hay_datos_personales}}"
+    },
+    "rescision": {
+      "required": true,
+      "template": "SÉPTIMA.- RESCISIÓN E INCUMPLIMIENTO. Se estipularán causas de rescisión y mecanismos de verificación del cumplimiento."
+    },
+    "controversias_mediacion": {
+      "required": true,
+      "template": "OCTAVA.- CONTROVERSIAS, MEDIACIÓN Y JURISDICCIÓN. Las partes convienen someter controversias a mediación ante el CAJA del Poder Judicial del Estado de Tabasco conforme a los formatos UJAT y reglas Tabasco; la competencia territorial y notificaciones se entenderá en coherencia con los domicilios declarados."
+    },
+    "comunicaciones_declaraciones": {
+      "required": true,
+      "template": "COMUNICACIONES. Las comunicaciones referentes a cualquier aspecto de este Convenio deberán dirigirse a los domicilios señalados en el apartado de DECLARACIONES."
+    }
+  },
+  "convenio_modificatorio": {
+    "identificacion_original": {
+      "required": true,
+      "template": "PRIMERA.- ANTECEDENTES. Las partes celebraron el instrumento original identificado como {{identificacion_convenio_original}}, el {{fecha_instrumento_original}}."
+    },
+    "modificaciones": {
+      "required": true,
+      "template": "SEGUNDA.- MODIFICACIONES. Se modifican las siguientes cláusulas o apartados: {{clausulas_modificadas}}."
+    },
+    "ratificacion_resto": {
+      "required": true,
+      "template": "TERCERA.- RATIFICACIÓN. Salvo lo expresamente modificado, el resto del instrumento original permanece vigente y ratificado en todos sus términos."
+    },
+    "vigencia_modificatorio": {
+      "required": true,
+      "template": "CUARTA.- VIGENCIA DE LAS MODIFICACIONES. {{vigencia_modificaciones}}"
+    }
+  },
+  "transversal": {
+    "declaracion_domicilio_notificaciones": {
+      "required": true,
+      "template": "Para los efectos a que haya lugar con motivo de la firma del presente Convenio, {{nombre_parte}} señala como domicilio el ubicado en {{domicilio}}. Domicilio que será el mismo para todo tipo de citas, notificaciones o emplazamientos en caso de juicio. Para comunicaciones derivadas del convenio: correo {{correo}} y teléfono {{telefono}}."
+    },
+    "declaracion_facultades_representante": {
+      "required": true,
+      "template": "Que {{representante}}, en su carácter de {{cargo}}, acredita su personalidad y facultades mediante {{fundamento_facultades}}, contando con las atribuciones para suscribir el presente Convenio, mismas que a la fecha no le han sido revocadas ni limitadas en forma alguna, según la información proporcionada por el usuario."
+    },
+    "relacion_laboral": {
+      "required": false,
+      "template": "Las partes reconocen que el presente convenio no crea relación laboral ni de subordinación entre sus respectivos servidores o personal, salvo pacto expreso distinto conforme a la ley."
+    },
+    "responsabilidad": {
+      "required": false,
+      "template": "Las partes responderán en los términos de la legislación aplicable por los daños que causen por dolo o negligencia en el cumplimiento de sus obligaciones."
+    },
+    "definiciones": {
+      "required": false,
+      "template": "Para efectos del presente instrumento, los términos {{definiciones}} tendrán el significado que se les atribuye en esta cláusula."
+    }
+  }
+}

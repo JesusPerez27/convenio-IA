@@ -1,0 +1,23 @@
+{
+  "titulo": "Ley General de Educación (referencia resumida)",
+  "nota": "Extracto conceptual para convenios con instituciones educativas. Ver texto oficial en fuentes actualizadas.",
+  "version_referencia": "corpus_local_etapa1",
+  "principios_relevantes_convenios": [
+    {
+      "id": "LGE-01",
+      "concepto": "Educación como interés público",
+      "resumen": "La educación es un interés público; la colaboración entre instituciones debe alinearse con fines educativos lícitos y programas institucionales."
+    },
+    {
+      "id": "LGE-02",
+      "concepto": "Autonomía universitaria (ámbito general)",
+      "resumen": "Las universidades autónomas ejercen funciones académicas con autonomía en términos constitucionales y legales; los convenios deben respetar competencias institucionales sin inventar atribuciones."
+    },
+    {
+      "id": "LGE-03",
+      "concepto": "Coordinación y colaboración",
+      "resumen": "La normatividad educativa favorece la coordinación entre autoridades e instituciones; los convenios marco y específicos son instrumentos habituales de colaboración."
+    }
+  ],
+  "instruccion_redactor": "En convenios UJAT, vincular objeto y obligaciones con fines educativos, de investigación o extensión según indique el usuario; no atribuir a la UJAT programas o facultades no confirmadas."
+}

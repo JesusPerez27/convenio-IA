@@ -1,0 +1,25 @@
+{
+  "nota": "Referencias breves para contexto institucional; no es compilación oficial.",
+  "fuentes": [
+    {
+      "nombre": "Constitución Política de los Estados Unidos Mexicanos",
+      "temas": ["educación", "autonomía universitaria", "transparencia"],
+      "uso_en_sistema": "Recordatorio: los convenios no deben contravenir mandatos constitucionales generales; revisión humana obligatoria."
+    },
+    {
+      "nombre": "Ley General de Transparencia y Acceso a la Información Pública",
+      "temas": ["obligaciones de transparencia para sujetos obligados", "protección de datos personales en información pública"],
+      "uso_en_sistema": "Si el convenio involucra datos personales o información institucional, considerar avisos de privacidad y responsables; no inventar obligaciones específicas sin datos."
+    },
+    {
+      "nombre": "Ley Federal del Trabajo (referencia general)",
+      "temas": ["independencia de contratos de trabajo vs colaboración académica"],
+      "uso_en_sistema": "Incluir cláusula de no relación laboral cuando proceda; evitar redacciones que creen subordinación laboral ficticia."
+    },
+    {
+      "nombre": "Ley de Propiedad Industrial y derechos de autor (referencia general)",
+      "temas": ["propiedad intelectual", "obras", "innovación"],
+      "uso_en_sistema": "En proyectos con entregables, regular titularidad y licencias; remitir a revisión especializada si el usuario lo marca."
+    }
+  ]
+}
