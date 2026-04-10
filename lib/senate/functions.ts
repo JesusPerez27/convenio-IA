@@ -126,6 +126,34 @@ async function callTextAgent(params: {
   return completion.choices[0]?.message?.content?.trim() ?? ''
 }
 
+function expectedSpecificHeaderTemplate(): string {
+  return [
+    'CONVENIO ESPECÍFICO DE COLABORACIÓN PARA [OBJETO O PROYECTO]',
+    '',
+    'QUE CELEBRAN POR UNA PARTE',
+    'LA UNIVERSIDAD JUÁREZ AUTÓNOMA DE TABASCO',
+    'Y POR LA OTRA PARTE',
+    '[NOMBRE DE LA CONTRAPARTE]',
+    '',
+    'Villahermosa, Tabasco. [DÍA] de [MES] de [AÑO]',
+    '',
+    'Después del encabezado, continúa con ANTECEDENTES, DECLARACIONES y CLÁUSULAS.',
+  ].join('\n')
+}
+
+function sanitizeDraftMarkdown(raw: string): string {
+  let text = (raw ?? '').trim()
+  if (!text) return ''
+
+  text = text.replace(/^```(?:markdown|md|text)?\s*/i, '').replace(/```$/i, '').trim()
+
+  const signature = 'Este borrador ha sido refinado'
+  const idx = text.indexOf(signature)
+  if (idx > 0) text = text.slice(0, idx).trim()
+
+  return text
+}
+
 function baseSystemPrompt(): string {
   const c = loadCorpusBundle()
   return [c.agent_prompts.global_system, buildCorpusContextForAgents()].join('\n\n')
@@ -208,13 +236,22 @@ export async function runRedactor(
     'Biblioteca de cláusulas (referencia, no copiar ciegamente):',
     clauseLibrarySnippet(),
     'Genera el borrador completo en Markdown con encabezados de cláusulas en MAYÚSCULAS.',
+    'No envíes bloques de código con ``` ni explicaciones fuera del convenio.',
+    tipoInstrumento === 'convenio_especifico_proyecto' ||
+    tipoInstrumento === 'convenio_especifico_colaboracion'
+      ? [
+          'Encabezado obligatorio del instrumento (estructura tipo Formato Convenio Específico):',
+          expectedSpecificHeaderTemplate(),
+        ].join('\n')
+      : '',
   ].join('\n\n')
-  return callTextAgent({
+  const text = await callTextAgent({
     model: MODEL_MINI,
     systemPrompt,
     userPrompt,
     temperature: 0.35,
   })
+  return sanitizeDraftMarkdown(text)
 }
 
 /** Integra el borrador previo con textos humanos ligados a cada alerta crítica del revisor. */
@@ -256,13 +293,22 @@ export async function runRedactorRefinement(
     'Borrador actual (intégralo y corrígelo según aportes):',
     textoBorradorActual.slice(0, 120000),
     'Devuelve el convenio completo refinado en Markdown.',
+    'No envíes bloques de código con ``` ni explicaciones fuera del convenio.',
+    tipoInstrumento === 'convenio_especifico_proyecto' ||
+    tipoInstrumento === 'convenio_especifico_colaboracion'
+      ? [
+          'Conserva este patrón de encabezado al inicio (siempre):',
+          expectedSpecificHeaderTemplate(),
+        ].join('\n')
+      : '',
   ].join('\n\n')
-  return callTextAgent({
+  const text = await callTextAgent({
     model: MODEL_MINI,
     systemPrompt,
     userPrompt,
     temperature: 0.3,
   })
+  return sanitizeDraftMarkdown(text)
 }
 
 export async function runReviewer(
