@@ -7,6 +7,7 @@ import { StepProcesando } from '@/components/senate/steps/StepProcesando'
 import { StepRevision } from '@/components/senate/steps/StepRevision'
 import { StepAprobado } from '@/components/senate/steps/StepAprobado'
 import { StepRechazado } from '@/components/senate/steps/StepRechazado'
+import { VerifyDocxModal } from '@/components/senate/VerifyDocxModal'
 
 const STEPS: { id: string; label: string }[] = [
   { id: 'inicio', label: 'Inicio' },
@@ -126,13 +127,22 @@ export function SenateWizard() {
           textoBorrador={s.session.texto_borrador}
           bloqueaExportacion={s.bloqueaExportacion}
           exportando={s.exportando}
+          registry={s.registry}
+          registrando={s.registrando}
           onExport={() => {
             s.clearError()
             void s.exportDocx()
           }}
           onReset={s.reset}
+          onRetryRegister={s.retryRegister}
+          onOpenVerify={() => s.setVerifyModalOpen(true)}
         />
       ) : null}
+
+      <VerifyDocxModal
+        open={s.verifyModalOpen}
+        onClose={() => s.setVerifyModalOpen(false)}
+      />
 
       {s.step === 'aprobado' || s.step === 'formalizacion' ? (
         s.error ? (

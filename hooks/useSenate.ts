@@ -16,6 +16,11 @@ import {
   mergeDatosUsuario,
 } from '@/lib/senate/critical-fields'
 import { MIN_DESCRIPCION_CLASIFICAR } from '@/lib/senate/constants'
+import type { DocumentRegistryResult } from '@/lib/senate/register-document'
+
+function isApprovedStep(step: WizardStep): boolean {
+  return step === 'aprobado' || step === 'formalizacion'
+}
 
 const SESSION_STORAGE_KEY = 'senado_session_id'
 
@@ -64,6 +69,9 @@ export function useSenate() {
   >([])
   const [isLoading, setIsLoading] = useState(false)
   const [exportando, setExportando] = useState(false)
+  const [registry, setRegistry] = useState<DocumentRegistryResult | null>(null)
+  const [registrando, setRegistrando] = useState(false)
+  const [verifyModalOpen, setVerifyModalOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const setField = useCallback((key: string, value: string) => {
@@ -83,6 +91,56 @@ export function useSenate() {
   }, [])
 
   const clearError = useCallback(() => setError(null), [])
+
+  const registerSessionDocument = useCallback(
+    async (sess: SenateSession, tipo: InstrumentType) => {
+      if (!sess.texto_borrador?.trim()) return
+      setRegistrando(true)
+      setRegistry(null)
+      try {
+        const res = await fetch('/api/senate/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            textoConvenio: sess.texto_borrador,
+            nombreArchivo: `convenio_${tipo}_${sess.session_id}.docx`,
+            sessionId: sess.session_id,
+            tipoInstrumento: tipo,
+            dictamen: sess.resultado_revision?.dictamen,
+          }),
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok || !data.ok) {
+          setRegistry({
+            status: 'failed',
+            fileHashHex: '',
+            hashVerified: false,
+            registeredAt: new Date().toISOString(),
+            error:
+              typeof data.error === 'string' ? data.error : 'Error al registrar en IPFS/blockchain',
+          })
+          return
+        }
+        setRegistry(data.registry as DocumentRegistryResult)
+      } catch (e) {
+        setRegistry({
+          status: 'failed',
+          fileHashHex: '',
+          hashVerified: false,
+          registeredAt: new Date().toISOString(),
+          error: e instanceof Error ? e.message : 'Error al registrar',
+        })
+      } finally {
+        setRegistrando(false)
+      }
+    },
+    []
+  )
+
+  const retryRegister = useCallback(() => {
+    if (!session) return
+    void registerSessionDocument(session, session.tipo_instrumento)
+  }, [session, registerSessionDocument])
 
   useEffect(() => {
     if (!orchestrator) return
@@ -201,7 +259,11 @@ export function useSenate() {
         if (sess?.datos_usuario) mergeForm(sess.datos_usuario)
         if (data.orchestrator) setOrchestrator(data.orchestrator as OrchestratorResult)
         const ws = data.wizard_step as WizardStep
-        setStep(ws === 'captura' ? 'captura' : ws)
+        const nextStep = ws === 'captura' ? 'captura' : ws
+        setStep(nextStep)
+        if (isApprovedStep(nextStep) && sess) {
+          void registerSessionDocument(sess, sess.tipo_instrumento)
+        }
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Error al refinamiento')
         setStep('revision')
@@ -209,7 +271,7 @@ export function useSenate() {
         setIsLoading(false)
       }
     },
-    [session, userInput, formData, mergeForm]
+    [session, userInput, formData, mergeForm, registerSessionDocument]
   )
 
   const runPipeline = useCallback(async () => {
@@ -259,14 +321,18 @@ export function useSenate() {
         )
       }
       const ws = data.wizard_step as WizardStep
-      setStep(ws === 'captura' ? 'captura' : ws)
+      const nextStep = ws === 'captura' ? 'captura' : ws
+      setStep(nextStep)
+      if (isApprovedStep(nextStep) && sess) {
+        void registerSessionDocument(sess, sess.tipo_instrumento)
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error en el pipeline')
       setStep('captura')
     } finally {
       setIsLoading(false)
     }
-  }, [userInput, formData, session?.session_id])
+  }, [userInput, formData, session?.session_id, registerSessionDocument])
 
   const exportDocx = useCallback(async () => {
     if (!session?.texto_borrador) {
@@ -281,13 +347,18 @@ export function useSenate() {
     setExportando(true)
     try {
       const nombreArchivo = `convenio_${tipoInstrumento}_${Date.now()}.docx`
+      const payload: Record<string, string> = { nombreArchivo }
+      // Mismo archivo exacto registrado en IPFS/blockchain (el hash no depende del nombre)
+      if (registry?.ipfsCid) {
+        payload.ipfsCid = registry.ipfsCid
+      } else {
+        payload.textoConvenio = session.texto_borrador
+      }
+
       const res = await fetch('/api/senate/export', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          textoConvenio: session.texto_borrador,
-          nombreArchivo,
-        }),
+        body: JSON.stringify(payload),
       })
       if (!res.ok) {
         const err = await res.json().catch(() => ({}))
@@ -305,7 +376,7 @@ export function useSenate() {
     } finally {
       setExportando(false)
     }
-  }, [session, tipoInstrumento])
+  }, [session, tipoInstrumento, registry?.ipfsCid])
 
   const reset = useCallback(() => {
     setStep('inicio')
@@ -318,6 +389,9 @@ export function useSenate() {
     setCapturist(null)
     setSession(null)
     setCamposCriticosPendientes([])
+    setRegistry(null)
+    setRegistrando(false)
+    setVerifyModalOpen(false)
     setError(null)
     clearStoredSessionId()
   }, [])
@@ -399,6 +473,9 @@ export function useSenate() {
     camposCriticosPendientes,
     isLoading,
     exportando,
+    registry,
+    registrando,
+    verifyModalOpen,
     error,
     revision,
     formalizacion,
@@ -408,6 +485,8 @@ export function useSenate() {
     runPipeline,
     refineFromReview,
     exportDocx,
+    retryRegister,
+    setVerifyModalOpen,
     reset,
     backToCapture,
     clearError,
